@@ -9,7 +9,7 @@ export default function Layout() {
         <Sidebar />
 
         
-        <main className="flex-1">
+        <main className="flex-1 p-4 h-screen overflow-y-scroll bg-slate-200">
           <Outlet />
         </main>
 
