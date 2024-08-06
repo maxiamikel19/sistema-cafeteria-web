@@ -1,8 +1,9 @@
-import { categorias } from "../data/categoria"
+import useProvider from "../hooks/useProvider"
 import Categoria from "./Categoria"
 
 export default function Sidebar() {
 
+    const {categorias} = useProvider()
 
   return (
     <aside className='md:w-72 h-screen'>

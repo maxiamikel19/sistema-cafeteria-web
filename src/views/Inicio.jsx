@@ -1,12 +1,15 @@
+import useProvider from "../hooks/useProvider"
 import Produto from "../components/Produto"
-import { produtos } from "../data/produto"
+import { produtos as data } from "../data/produto"
 
 export default function Inicio() {
 
-  console.log(produtos)
+  const {categoriaSelecionada} = useProvider()
+  const produtos = data.filter(produto => produto.categoria_id === categoriaSelecionada.id)
+  //console.log(produtos)
   return (
     <>
-      <h1 className="text-xl font-bold">Home</h1>
+      <h1 className="text-xl font-bold">{categoriaSelecionada.nome}</h1>
       <p className="text-sm my-10">
         Escolhe os produtos para montar o seu pedido
       </p>
