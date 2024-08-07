@@ -1,12 +1,13 @@
 import useProvider from "../hooks/useProvider"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { formatarDinheiro } from "../helpers"
 
 export default function ModalProduto() {
 
-    const {produto, handleClickModalProduto, handleAdicionarprodutoPedido} = useProvider()
+    const {produto, handleClickModalProduto, handleAdicionarprodutoPedido, pedido} = useProvider()
     const {nome,descricao, imagen, preco} = produto
     const [cantidade, setCantidade] = useState(1)
+    const [editar, setEditar] = useState(false)
 
 
     const handleAdicionarCantidade=() =>{
@@ -23,6 +24,15 @@ export default function ModalProduto() {
         setCantidade(cantidade - 1 )
     }
     //console.log(produto)
+
+    useEffect( () => {
+        if(pedido.some(produtoPedido => produtoPedido.id === produto.id)){
+            //console.log('Sim esta')
+            const novaCantidade = pedido.filter(produtoPedido => produtoPedido.id === produto.id)[0]
+            setCantidade(novaCantidade.cantidade)
+            setEditar(true)
+        }
+    }, [pedido])
 
   return (
     <div className="md:flex flex gap-10">
@@ -85,7 +95,7 @@ export default function ModalProduto() {
                                 handleClickModalProduto();
                             }
                         }
-                    >Adicionar</button>
+                    > {editar ? "Editar" : "Adicionar"}</button>
                 </div>
             </div>
         </div>

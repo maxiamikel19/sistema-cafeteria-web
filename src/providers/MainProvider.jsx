@@ -30,8 +30,15 @@ const MainProvider = ({children}) => {
     const handleAdicionarprodutoPedido = ({categoria_id, descricao, imagen, disponivel, ...produto}) => {
         //console.log(produto)
         //Pega uma copia do pedido que tem a adiciona o atual produto
-        setPedido([...pedido, produto])
+        if(pedido.some(prod => prod.id === produto.id)){
+            const atualizado = pedido.map(prod => prod.id === produto.id ? produto : prod)
+            setPedido(atualizado)
+        }else{
+           setPedido([...pedido, produto]) 
+        }
+        
     }
+
     return (
         <MainContext.Provider
             value={{
