@@ -6,7 +6,7 @@ export default function Sidebar() {
     const {categorias} = useProvider()
 
   return (
-    <aside className='md:w-72 h-screen'>
+    <aside className='md:w-72 h-screen flex flex-col justify-between'>
         <div className="p-4">
             <img
                 src='../img/logo-oficials.png' 
@@ -15,7 +15,7 @@ export default function Sidebar() {
             />
         </div>
 
-        <div className="text-xl px-3">
+        <div className="text-xl px-3 overflow-y-auto h-screen">
             {categorias.map( categoria => {
                 return (
                     <Categoria 
@@ -25,7 +25,7 @@ export default function Sidebar() {
                 )
             })}
         </div>
-        <div className="px-4 m-auto">
+        <div className="px-4 m-auto mb-5">
            <input 
                 type="submit" 
                 value="cancelar pedido"

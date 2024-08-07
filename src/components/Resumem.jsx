@@ -6,7 +6,9 @@ export default function Resumem() {
 
   const {pedido, total} = useProvider()
 
-  //console.log(pedido)
+  const isEmptyPedido = pedido.length === 0;
+
+  //console.log(isEmptyPedido)
    
   return (
     <aside className='w-72 h-screen p-5 overflow-y-scroll'>
@@ -36,8 +38,9 @@ export default function Resumem() {
           <div className="mt-5">
             <input 
               type="submit" 
-              className="bg-slate-500 hover:bg-slate-700 text-white uppercase w-full p-3 cursor-pointer rounded-md"
+              className={`${!isEmptyPedido ?'bg-slate-500 hover:bg-slate-700' : 'bg-slate-300'}  text-white uppercase w-full p-3 cursor-pointer rounded-md`}
               value="Confirmar"
+              disabled={isEmptyPedido}
             />
           </div>
         </form>
