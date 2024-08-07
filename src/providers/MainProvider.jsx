@@ -28,7 +28,7 @@ const MainProvider = ({children}) => {
         setProduto(produto)
     }
 
-    const handleAdicionarprodutoPedido = ({categoria_id, descricao, imagen, disponivel, ...produto}) => {
+    const handleAdicionarprodutoPedido = ({categoria_id, descricao, disponivel, ...produto}) => {
         //console.log(produto)
         //Pega uma copia do pedido que tem a adiciona o atual produto
         if(pedido.some(prod => prod.id === produto.id)){
@@ -39,7 +39,23 @@ const MainProvider = ({children}) => {
            setPedido([...pedido, produto]) 
            toast.success('Produto adicionado com sucesso ao pedido')
         }
-        
+    }
+
+    const handleEditarProdutoPedido = (id) => {
+        //console.log(id)
+        const produtoAtualizado = pedido.filter(produto => produto.id === id)[0]
+        setProduto(produtoAtualizado)
+        setModal(!modal)
+        //console.log(produtoAtualizado)
+    }
+
+
+    const handleEliminarProdutoPedido = (id) => {
+        //console.log(id)
+        const produtoEliminado = pedido.filter(produto => produto.id !== id)
+        setPedido(produtoEliminado)
+        toast.success('Produto eliminado com sucesso!')
+        //console.log(produtoAtualizado)
     }
 
     return (
@@ -53,7 +69,9 @@ const MainProvider = ({children}) => {
                 produto,
                 handleSetProduto,
                 pedido,
-                handleAdicionarprodutoPedido
+                handleAdicionarprodutoPedido,
+                handleEditarProdutoPedido,
+                handleEliminarProdutoPedido
             }}
         >{children}</MainContext.Provider>
     )

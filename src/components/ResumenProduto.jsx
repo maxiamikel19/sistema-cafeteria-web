@@ -1,8 +1,9 @@
 import { formatarDinheiro } from "../helpers"
-
+import useProvider from "../hooks/useProvider"
 export default function ResumenProduto({produto}) {
 
     const {id, nome, preco, cantidade} = produto
+    const {handleEditarProdutoPedido, handleEliminarProdutoPedido} = useProvider()
 
   return (
     <div className="shadow space-y-1 p-4 bg-white">
@@ -21,6 +22,7 @@ export default function ResumenProduto({produto}) {
       <button
         type="button"
         className="bg-sky-700 p-2 text-white rounded-md font-bold uppercase shadow-md text-center"
+        onClick={() => handleEditarProdutoPedido(id)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -34,6 +36,7 @@ export default function ResumenProduto({produto}) {
       <button
         type="button"
         className="bg-red-700 p-2 text-white rounded-md font-bold uppercase shadow-md text-center"
+        onClick={() => handleEliminarProdutoPedido(id)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
