@@ -1,4 +1,5 @@
 import { createContext, useState } from "react"
+import { toast } from "react-toastify";
 import { categorias as categoriaDB } from "../data/categoria"
 import { produtos as produtoDB} from "../data/produto"
 
@@ -33,8 +34,10 @@ const MainProvider = ({children}) => {
         if(pedido.some(prod => prod.id === produto.id)){
             const atualizado = pedido.map(prod => prod.id === produto.id ? produto : prod)
             setPedido(atualizado)
+            toast.success('Produto editado no seu pedido')
         }else{
            setPedido([...pedido, produto]) 
+           toast.success('Produto adicionado com sucesso ao pedido')
         }
         
     }
