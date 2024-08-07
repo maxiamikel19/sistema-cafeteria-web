@@ -4,7 +4,7 @@ import { formatarDinheiro } from "../helpers"
 
 export default function ModalProduto() {
 
-    const {produto, handleClickModalProduto} = useProvider()
+    const {produto, handleClickModalProduto, handleAdicionarprodutoPedido} = useProvider()
     const {nome,descricao, imagen, preco} = produto
     const [cantidade, setCantidade] = useState(1)
 
@@ -80,6 +80,11 @@ export default function ModalProduto() {
                     <button
                         type="button"
                         className="bg-slate-500 hover:bg-slate-700 text-white uppercase w-full p-3 cursor-pointer rounded-md"
+                        onClick={ () => { 
+                                handleAdicionarprodutoPedido({...produto, cantidade});
+                                handleClickModalProduto();
+                            }
+                        }
                     >Adicionar</button>
                 </div>
             </div>

@@ -10,6 +10,7 @@ const MainProvider = ({children}) => {
     const [categoriaSelecionada, setCategoriaSelecionada] = useState(categorias[0])
     const [modal, setModal] = useState(false)
     const [produto, setProduto] = useState({})
+    const [pedido, setPedido] = useState([])
     
 
     const handleClickCategoria = (id) => {
@@ -26,6 +27,11 @@ const MainProvider = ({children}) => {
         setProduto(produto)
     }
 
+    const handleAdicionarprodutoPedido = ({categoria_id, descricao, imagen, disponivel, ...produto}) => {
+        //console.log(produto)
+        //Pega uma copia do pedido que tem a adiciona o atual produto
+        setPedido([...pedido, produto])
+    }
     return (
         <MainContext.Provider
             value={{
@@ -35,7 +41,9 @@ const MainProvider = ({children}) => {
                 modal,
                 handleClickModalProduto,
                 produto,
-                handleSetProduto
+                handleSetProduto,
+                pedido,
+                handleAdicionarprodutoPedido
             }}
         >{children}</MainContext.Provider>
     )
