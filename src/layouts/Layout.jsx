@@ -18,7 +18,7 @@ const customStyles = {
 
 export default function Layout() {
   
-  const {modal, handleClickModalProduto} = useProvider();
+  const {modal} = useProvider();
 
   //console.log(modal)
   Modal.setAppElement("#root")
@@ -35,8 +35,7 @@ export default function Layout() {
 
           <Resumem />
       </div>
-      <Modal isOpen={modal} style={customStyles}>
-        <button onClick={handleClickModalProduto}>Fechar</button>
+      <Modal isOpen={modal} style={customStyles}>       
          <ModalProduto />
       </Modal>
     </>
