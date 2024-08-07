@@ -1,9 +1,10 @@
+import { formatarDinheiro } from "../helpers"
 import useProvider from "../hooks/useProvider"
 import ResumenProduto from "./ResumenProduto"
 
 export default function Resumem() {
 
-  const {pedido} = useProvider()
+  const {pedido, total} = useProvider()
 
   //console.log(pedido)
    
@@ -29,7 +30,7 @@ export default function Resumem() {
           )}
         </div>
 
-        <p className="text-xl mt-10">Total: {''}</p>
+        <p className="text-xl mt-10">Total: {''} {formatarDinheiro(total)}</p>
 
         <form className="w-full">
           <div className="mt-5">

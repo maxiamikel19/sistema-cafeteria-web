@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import { toast } from "react-toastify";
 import { categorias as categoriaDB } from "../data/categoria"
 import { produtos as produtoDB} from "../data/produto"
@@ -12,6 +12,7 @@ const MainProvider = ({children}) => {
     const [modal, setModal] = useState(false)
     const [produto, setProduto] = useState({})
     const [pedido, setPedido] = useState([])
+    const [total, setTotal] = useState(0)
     
 
     const handleClickCategoria = (id) => {
@@ -58,6 +59,11 @@ const MainProvider = ({children}) => {
         //console.log(produtoAtualizado)
     }
 
+    useEffect(()=>{
+        const calcTotal = pedido.reduce( (total, produto) => (produto.preco * produto.cantidade) + total, 0)
+        setTotal(calcTotal)
+    }, [pedido])
+
     return (
         <MainContext.Provider
             value={{
@@ -71,7 +77,8 @@ const MainProvider = ({children}) => {
                 pedido,
                 handleAdicionarprodutoPedido,
                 handleEditarProdutoPedido,
-                handleEliminarProdutoPedido
+                handleEliminarProdutoPedido,
+                total
             }}
         >{children}</MainContext.Provider>
     )
