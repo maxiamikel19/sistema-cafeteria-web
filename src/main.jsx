@@ -5,6 +5,7 @@ import './index.css'
 import router from './router'
 import { MainProvider } from './providers/MainProvider'
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <MainProvider>

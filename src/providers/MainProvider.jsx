@@ -8,7 +8,9 @@ const MainProvider = ({children}) => {
 
     const [categorias, setCategorias] = useState(categoriaDB)
     const [categoriaSelecionada, setCategoriaSelecionada] = useState(categorias[0])
-    const [produtos, setProdutos] = useState(produtoDB)
+    const [modal, setModal] = useState(false)
+    const [produto, setProduto] = useState({})
+    
 
     const handleClickCategoria = (id) => {
         const categoria = categorias.filter( categoria => (categoria.id === id))[0]
@@ -16,6 +18,13 @@ const MainProvider = ({children}) => {
        // console.log(categoria)
     }
 
+    const handleClickModalProduto = () => {
+        setModal(!modal)
+    }
+
+    const handleSetProduto = (produto) =>{
+        setProduto(produto)
+    }
 
     return (
         <MainContext.Provider
@@ -23,7 +32,10 @@ const MainProvider = ({children}) => {
                 categorias,
                 categoriaSelecionada,
                 handleClickCategoria,
-                produtos
+                modal,
+                handleClickModalProduto,
+                produto,
+                handleSetProduto
             }}
         >{children}</MainContext.Provider>
     )

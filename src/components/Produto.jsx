@@ -1,8 +1,13 @@
+import useProvider from "../hooks/useProvider"
 import { formatarDinheiro } from "../helpers"
 
 export default function Produto({produto}) {
 
     const {id,nome,imagen, descricao, preco, disponivel} = produto
+    const {handleClickModalProduto, handleSetProduto} = useProvider()
+
+    //console.log(produto)
+
   return (
     <div className='border p-3 shadow-md bg-white rounded'>
         <img 
@@ -21,6 +26,10 @@ export default function Produto({produto}) {
             type="submit" 
             value="Selecionar"
             className="bg-slate-500 hover:bg-slate-700 text-white uppercase w-full p-4 mt-5 cursor-pointer rounded-md"
+            onClick={ () => {
+                handleClickModalProduto();
+                handleSetProduto(produto);
+            }}
         />
     </div>
   )
