@@ -6,6 +6,7 @@ import Sidebar from "../components/Sidebar"
 import Resumem from "../components/Resumem"
 import ModalProduto from "../components/ModalProduto";
 import "react-toastify/dist/ReactToastify.css"
+import { useAuth } from "../hooks/useAuth";
 
 const customStyles = {
   content: {
@@ -21,6 +22,9 @@ const customStyles = {
 export default function Layout() {
   
   const {modal} = useProvider();
+  const {user, error} = useAuth({middleware: 'auth'})
+  console.log(user)
+  console.log(error)
 
   //console.log(modal)
   Modal.setAppElement("#root")
