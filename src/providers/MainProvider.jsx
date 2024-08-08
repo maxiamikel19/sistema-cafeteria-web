@@ -1,19 +1,36 @@
 import { createContext, useEffect, useState } from "react"
+import clienteAxios from "../config";
 import { toast } from "react-toastify";
-import { categorias as categoriaDB } from "../data/categoria"
-import { produtos as produtoDB} from "../data/produto"
 
 const MainContext = createContext();
 
 const MainProvider = ({children}) => {
 
-    const [categorias, setCategorias] = useState(categoriaDB)
-    const [categoriaSelecionada, setCategoriaSelecionada] = useState(categorias[0])
+    const [categorias, setCategorias] = useState([])
+    const [categoriaSelecionada, setCategoriaSelecionada] = useState({})
     const [modal, setModal] = useState(false)
     const [produto, setProduto] = useState({})
     const [pedido, setPedido] = useState([])
     const [total, setTotal] = useState(0)
     
+
+    const getCategorias = async () => {
+        try {
+            //console.log(import.meta.env.VITE_API_URL)
+            const {data} = await clienteAxios('/api/categorias')
+            setCategorias(data.data)
+            setCategoriaSelecionada(data.data[0])
+            //console.log(data.data)
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
+
+    useEffect(() => {
+        getCategorias()
+    }, [])
+
 
     const handleClickCategoria = (id) => {
         const categoria = categorias.filter( categoria => (categoria.id === id))[0]

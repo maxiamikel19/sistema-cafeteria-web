@@ -11,7 +11,7 @@ export default function Resumem() {
   //console.log(isEmptyPedido)
    
   return (
-    <aside className='w-72 h-screen p-5 overflow-y-scroll'>
+    <aside className='md:w-72 h-screen p-5 overflow-y-scroll'>
         <h1 className='text-3xl font-semibold text-slate-800 capitalize'>Seu pedido</h1>
         <p>Aqui ver&aacute;s o resumen completo do seu pedido</p>
 
