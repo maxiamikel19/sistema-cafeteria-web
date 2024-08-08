@@ -1,15 +1,47 @@
 import { Link } from "react-router-dom"
+import { useRef, useState } from "react"
+import clienteAxios from '../config/index'
+import Alerta from "../components/Alerta"
 
 export default function Registro() {
+
+    const refName = useRef()
+    const refEmail = useRef()
+    const refPassword = useRef()
+    const refPasswordConfitmation = useRef()
+    const [errores, setErrores] = useState([])
+
+    
+    const handleFormSubmit = async (e) =>{
+        e.preventDefault()
+
+        const dados = {
+            name: refName.current.value,
+            email: refEmail.current.value,
+            password: refPassword.current.value,
+            password_confirmation: refPasswordConfitmation.current.value
+        }
+        //console.log(dados)
+
+        try {
+            const response = await clienteAxios.post('/api/registro', dados)
+        } catch (error) {
+            setErrores(Object.values(error.response.data.errors))
+        }
+    }
   return (
     <>
         <h1 className="text-3xl font-black">Cria sua conta</h1>
         <p className="text-sm">Informe os dados solicitados para criar a sua conta</p>
 
         <div className="bg-white shadow-lg rounded-md mt-10 py-5 px-5">
+
+            {errores ? errores.map(error => <Alerta key={error}> {error}</Alerta>) : null}
             <form 
                 action=""
                 autoComplete="OFF"
+                onSubmit={handleFormSubmit}
+                noValidate
             >
 
                 <div className="mb-4">
@@ -23,6 +55,7 @@ export default function Registro() {
                         name="name"
                         id="name"
                         placeholder="Seu nome"
+                        ref={refName}
                     />
                 </div>
 
@@ -37,6 +70,7 @@ export default function Registro() {
                         name="email"
                         id="email"
                         placeholder="Seu email"
+                        ref={refEmail}
                     />
                 </div>
 
@@ -51,6 +85,7 @@ export default function Registro() {
                         name="password"
                         id="password"
                         placeholder="Sua senha"
+                        ref={refPassword}
                     />
                 </div>
 
@@ -65,6 +100,7 @@ export default function Registro() {
                         name="password_confirmation"
                         id="password_confirmation"
                         placeholder="Repetir a senha"
+                        ref={refPasswordConfitmation}
                     />
                 </div>
 
