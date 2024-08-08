@@ -23,8 +23,8 @@ export default function Layout() {
   
   const {modal} = useProvider();
   const {user, error} = useAuth({middleware: 'auth'})
-  console.log(user)
-  console.log(error)
+  // console.log(user)
+  // console.log(error)
 
   //console.log(modal)
   Modal.setAppElement("#root")
