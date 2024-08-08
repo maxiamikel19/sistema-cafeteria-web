@@ -24,7 +24,8 @@ export default function Registro() {
         //console.log(dados)
 
         try {
-            const response = await clienteAxios.post('/api/registro', dados)
+            const {data} = await clienteAxios.post('/api/registro', dados)
+            console.log(data.token)
         } catch (error) {
             setErrores(Object.values(error.response.data.errors))
         }
@@ -38,7 +39,6 @@ export default function Registro() {
 
             {errores ? errores.map(error => <Alerta key={error}> {error}</Alerta>) : null}
             <form 
-                action=""
                 autoComplete="OFF"
                 onSubmit={handleFormSubmit}
                 noValidate

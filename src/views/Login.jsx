@@ -1,6 +1,30 @@
 import { Link } from "react-router-dom"
+import { useRef, useState } from "react"
+import { useAuth } from "../hooks/useAuth"
+import Alerta from "../components/Alerta"
 
 export default function Login() {
+
+    const refEmail = useRef()
+    const refPassword = useRef()
+    const [errores, setErrores] = useState([])
+
+    const {login} = useAuth({
+        middleware: 'guest', 
+        url: '/'
+    })
+
+
+    const handleFormLogin = async (e) =>{
+        e.preventDefault()
+
+        const dados = {
+            email: refEmail.current.value,
+            password: refPassword.current.value
+        }
+
+        login(dados, setErrores)
+    }
   return (
     <>
     <h1 className="text-3xl font-black">Login</h1>
@@ -10,8 +34,10 @@ export default function Login() {
         <form 
             action=""
             autoComplete="OFF"
+            noValidate
+            onSubmit={handleFormLogin}
         >
-
+            {errores ? errores.map(error => <Alerta key={error}>{error}</Alerta>) : null}
             <div className="mb-4">
                 <label 
                     htmlFor="email" 
@@ -23,6 +49,7 @@ export default function Login() {
                     name="email"
                     id="email"
                     placeholder="Seu email"
+                    ref={refEmail}
                 />
             </div>
 
@@ -37,6 +64,7 @@ export default function Login() {
                     name="password"
                     id="password"
                     placeholder="Sua senha"
+                    ref={refPassword}
                 />
             </div>
 
