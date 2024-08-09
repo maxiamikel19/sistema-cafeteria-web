@@ -107,7 +107,7 @@ export default function Registro() {
                 <input 
                     type="submit" 
                     value="Criar sua conta"
-                    className="bg-indigo-500 hover:bg-indigo-700 text-white uppercase w-full p-4 mt-5 cursor-pointer rounded-md"
+                    className="bg-slate-500 hover:bg-slate-700 text-white uppercase w-full p-4 mt-5 cursor-pointer rounded-md"
                 />
             </form>
         </div>

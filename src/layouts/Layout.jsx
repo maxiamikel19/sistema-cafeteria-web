@@ -33,7 +33,6 @@ export default function Layout() {
       <div className="md:flex">
           
           <Sidebar />
-
           
           <main className="flex-1 p-4 h-screen overflow-y-scroll bg-slate-200">
             <Outlet />

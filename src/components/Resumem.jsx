@@ -12,10 +12,14 @@ export default function Resumem() {
    
   return (
     <aside className='md:w-72 h-screen p-5 overflow-y-scroll'>
-        <h1 className='text-3xl font-semibold text-slate-800 capitalize'>Seu pedido</h1>
-        <p>Aqui ver&aacute;s o resumen completo do seu pedido</p>
-
-        <div className="py-10">
+        <h1 className='text-2xl font-semibold text-slate-800 uppercase'>Seu pedido</h1>
+        
+        {pedido.length === 0 ? (
+          <p>Aqui ver&aacute;s o resumen completo do seu pedido</p>
+        ) : (
+          <p className="p-2 font-semibold text-right underline">Pedido 0001</p>
+        )}
+        <div className="pb-10 pt-1 bg-slate-100">
           {pedido.length === 0 ? (
             <div className="p-2">
               <h1 className="text-2xl text-center">Voc&ecirc; n&atilde;o tem produtos agregado ainda!</h1>

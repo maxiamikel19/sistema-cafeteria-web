@@ -8,7 +8,8 @@ export default function ResumenProduto({produto}) {
   return (
     <div className="shadow space-y-1 p-4 bg-white">
     <div className="space-y-2">
-      <p className="text-md font-semibold">{nome}</p>
+    <p className="text-md"></p>
+      <p className="text-md"><span className="text-slate-900 font-semibold">{id}-:</span> {nome}</p>
       <p className="text-md uppercase font-bold ">qtd: {cantidade}</p>
       <p className="text-lg font-bold text-amber-500">
         Pre&ccedil;o: {formatarDinheiro(preco)}
