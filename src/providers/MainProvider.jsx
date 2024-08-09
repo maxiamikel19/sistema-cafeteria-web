@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react"
 import clienteAxios from "../config";
 import { toast } from "react-toastify";
+import { data } from "autoprefixer";
 
 const MainContext = createContext();
 
@@ -76,6 +77,41 @@ const MainProvider = ({children}) => {
         //console.log(produtoAtualizado)
     }
 
+    const handleCreatePedido = async (logout) =>{
+        const token = localStorage.getItem('AUTH_TOKEN')
+       
+        try {
+            await clienteAxios.post('/api/pedidos', 
+            {
+              total, 
+              produtos: pedido.map(produto => {/* Percorrer os pedidos e guardar o id e a cantidade no arrar produtos */
+                return {
+                  id:produto.id,
+                  cantidade: produto.cantidade   
+                }
+              }), 
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            toast.success('Pedido enviado com sucesso')
+           // console.log(produtos)
+           setTimeout( () =>{
+             setPedido([])
+           }, 5000)
+
+           //Encerrar a sessão do usuario
+           setTimeout( () => {
+             localStorage.removeItem('AUTH_TOKEN');
+             logout();
+           }, 5000)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(()=>{
         const calcTotal = pedido.reduce( (total, produto) => (produto.preco * produto.cantidade) + total, 0)
         setTotal(calcTotal)
@@ -95,7 +131,8 @@ const MainProvider = ({children}) => {
                 handleAdicionarprodutoPedido,
                 handleEditarProdutoPedido,
                 handleEliminarProdutoPedido,
-                total
+                total,
+                handleCreatePedido
             }}
         >{children}</MainContext.Provider>
     )
