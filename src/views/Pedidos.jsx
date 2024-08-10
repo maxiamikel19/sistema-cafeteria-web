@@ -1,10 +1,12 @@
 import clienteAxios from "../config"
 import useSWR from "swr"
 import { formatarDinheiro } from "../helpers"
+import useProvider from "../hooks/useProvider"
 
 export default function Pedidos() {
 
   const token = localStorage.getItem('AUTH_TOKEN')
+  const {handleCompletarPedido} = useProvider()
   
   const fetcher = () => clienteAxios('/api/pedidos', {
     headers: {
@@ -30,7 +32,7 @@ export default function Pedidos() {
       <div className="w-full grid grid-cols-2 gap-4">
         
         {data.data.data.map(pedido => (
-          <div className="p-5 border bg-white shadow space-y-2">
+          <div className="p-5 border bg-white shadow space-y-2 h-auto">
              <p key={pedido.id} className="font-semibold uppercase underline"> id:  {pedido.id}</p>
               
              {pedido.produtos.map(produto=> (
@@ -52,12 +54,10 @@ export default function Pedidos() {
              <div className="p-3">
               <button 
                   type="submit"
-                  className="bg-purple-700 hover:bg-purple-600 text-white uppercase w-full p-3 font-bold cursor-pointer rounded-md"
-                  
+                  className="bg-purple-700 hover:bg-purple-600 text-white text-center uppercase w-full p-3 font-bold cursor-pointer rounded-md"
+                  onClick={ () => handleCompletarPedido(pedido.id)}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                </svg>
+                 completar pedido
               </button> 
              </div>
           </div>

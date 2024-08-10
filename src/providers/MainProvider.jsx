@@ -112,6 +112,21 @@ const MainProvider = ({children}) => {
         }
     }
 
+    const handleCompletarPedido = async (id) => {
+
+        const token = localStorage.getItem('AUTH_TOKEN')
+        try {
+            await clienteAxios.put(`/api/pedidos/${id}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+           
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(()=>{
         const calcTotal = pedido.reduce( (total, produto) => (produto.preco * produto.cantidade) + total, 0)
         setTotal(calcTotal)
@@ -132,7 +147,8 @@ const MainProvider = ({children}) => {
                 handleEditarProdutoPedido,
                 handleEliminarProdutoPedido,
                 total,
-                handleCreatePedido
+                handleCreatePedido,
+                handleCompletarPedido
             }}
         >{children}</MainContext.Provider>
     )
