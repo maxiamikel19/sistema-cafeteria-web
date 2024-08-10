@@ -81,7 +81,7 @@ const MainProvider = ({children}) => {
         const token = localStorage.getItem('AUTH_TOKEN')
        
         try {
-            await clienteAxios.post('/api/pedidos', 
+            await clienteAxios.post('/api/post', 
             {
               total, 
               produtos: pedido.map(produto => {/* Percorrer os pedidos e guardar o id e a cantidade no arrar produtos */
