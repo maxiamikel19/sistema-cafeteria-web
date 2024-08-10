@@ -22,9 +22,10 @@ export default function Pedidos() {
   
   if(isLoading) return ("Carregando...")
 
-  console.log(data)
+  //console.log(data)
   return (
     <div className="w-full px-3">
+    
       <div className="px-2 pb-4 shadow-2xl bg-white border text-center mb-2">
         <h1 className="uppercase font-black text-slate-600 text-2xl">pedidos</h1>
       </div>
@@ -32,8 +33,8 @@ export default function Pedidos() {
       <div className="w-full grid grid-cols-2 gap-4">
         
         {data.data.data.map(pedido => (
-          <div className="p-5 border bg-white shadow space-y-2 h-auto">
-             <p key={pedido.id} className="font-semibold uppercase underline"> id:  {pedido.id}</p>
+          <div className="p-5 border bg-white shadow space-y-2 h-auto" key={pedido.id}>
+             <p  className="font-semibold uppercase underline"> id:  {pedido.id}</p>
               
              {pedido.produtos.map(produto=> (
               <div className="border p-2 my-3 border-purple-200 rounded" key={produto.id}>

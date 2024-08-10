@@ -1,12 +1,28 @@
 import { Link } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
-import useProvider from "../hooks/useProvider"
+import clienteAxios from "../config"
+import Alerta from "../components/Alerta"
+import useSWR from "swr"
 
 export default function AdminSidebar() {
     const {logout} = useAuth({middleware: 'auth'})
-    const {pedido} = useProvider()
+    
+    const token = localStorage.getItem('AUTH_TOKEN')
+
+    const fetcher = () => clienteAxios('/api/pedidos', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    
+    const {data, error} = useSWR('/api/pedidos', fetcher, { refreshInterval: 1000})
+
+    if (error) return <Alerta>Erro ao carregar os dados.</Alerta>
+    if (!data) return <div>Carregando...</div>
+
   return (
     <aside className='md:w-72 h-screen bg-purple-400'>
+      
         <div className="p-4">
             <img 
               src="/img/logo-oficials.png" 
@@ -17,10 +33,13 @@ export default function AdminSidebar() {
 
         <nav className="p-4 flex flex-col">
             <Link to="/admin" className="font-semibold text-xl p-2 bg-purple-600 justify-between flex mb-2 rounded-md hover:bg-purple-700">
-              Pedidos <span className="text-lg bg-purple-800 text-white p-2 rounded-full">{pedido.length}</span>
+              Pedidos <span className="text-lg bg-purple-800 text-white p-2 rounded-full">{data.data.data.length <= 9 ? '0' + data.data.data.length : data.data.data.length }</span>
             </Link>
             <Link to="admin/produtos" className="font-semibold text-xl p-2 bg-purple-600 justify-between flex mb-2 rounded-md hover:bg-purple-700">
               Produtos <span className="text-lg bg-purple-800 text-white p-2 rounded-full">38</span>
+            </Link>
+            <Link to="" className="font-semibold text-xl p-2 bg-purple-600 justify-between flex mb-2 rounded-md hover:bg-purple-700">
+              Inativos <span className="text-lg bg-purple-800 text-white p-2 rounded-full">38</span>
             </Link>
         </nav>
 
