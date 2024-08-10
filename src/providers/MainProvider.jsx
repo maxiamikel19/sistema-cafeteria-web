@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react"
 import clienteAxios from "../config";
 import { toast } from "react-toastify";
-import { data } from "autoprefixer";
 
 const MainContext = createContext();
 
@@ -16,9 +15,14 @@ const MainProvider = ({children}) => {
     
 
     const getCategorias = async () => {
+        const token = localStorage.getItem('AUTH_TOKEN')
         try {
             //console.log(import.meta.env.VITE_API_URL)
-            const {data} = await clienteAxios('/api/categorias')
+            const {data} = await clienteAxios('/api/categorias', {
+                headers: {
+                    Authorization : `Bearer ${token}`
+                }
+            })
             setCategorias(data.data)
             setCategoriaSelecionada(data.data[0])
             //console.log(data.data)
@@ -127,6 +131,20 @@ const MainProvider = ({children}) => {
         }
     }
 
+    const handleClickDesativarProduto = async (id) => {
+        const token = localStorage.getItem('AUTH_TOKEN')
+        try {
+            await clienteAxios.put(`/api/produtos/${id}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+           
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(()=>{
         const calcTotal = pedido.reduce( (total, produto) => (produto.preco * produto.cantidade) + total, 0)
         setTotal(calcTotal)
@@ -148,7 +166,8 @@ const MainProvider = ({children}) => {
                 handleEliminarProdutoPedido,
                 total,
                 handleCreatePedido,
-                handleCompletarPedido
+                handleCompletarPedido,
+                handleClickDesativarProduto
             }}
         >{children}</MainContext.Provider>
     )

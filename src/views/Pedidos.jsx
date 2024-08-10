@@ -24,7 +24,7 @@ export default function Pedidos() {
 
   console.log(data)
   return (
-    <div className="w-full px-3S">
+    <div className="w-full px-3">
       <div className="px-2 pb-4 shadow-2xl bg-white border text-center mb-2">
         <h1 className="uppercase font-black text-slate-600 text-2xl">pedidos</h1>
       </div>

@@ -1,17 +1,17 @@
 import useProvider from "../hooks/useProvider"
 import { formatarDinheiro } from "../helpers"
 
-export default function Produto({produto}) {
+export default function Produto({produto, btnAdicionar = false, btnDisponivel = false}) {
 
     const {id,nome,imagen, descricao, preco, disponivel} = produto
-    const {handleClickModalProduto, handleSetProduto} = useProvider()
+    const {handleClickModalProduto, handleSetProduto, handleClickDesativarProduto} = useProvider()
 
     //console.log(produto)
 
   return (
     <div className='border p-3 shadow-md bg-white rounded'>
         <img 
-            src={`../img/${imagen}.jpg`} 
+            src={`/img/${imagen}.jpg`} 
             alt={nome} 
             className='w-full'
         />
@@ -22,7 +22,9 @@ export default function Produto({produto}) {
             <p className='mt-5 font-black text-3xl text-amber-600'>{formatarDinheiro(preco)}</p>
         </div>
 
-        <input 
+        {btnAdicionar && (
+
+            <input 
             type="submit" 
             value="Selecionar"
             className="bg-slate-500 hover:bg-slate-700 text-white uppercase w-full p-4 mt-5 cursor-pointer rounded-md"
@@ -30,7 +32,20 @@ export default function Produto({produto}) {
                 handleClickModalProduto();
                 handleSetProduto(produto);
             }}
-        />
+            />
+
+        )}
+
+        {btnDisponivel && (
+
+            <input 
+            type="submit" 
+            value="Esgotado"
+            className="bg-slate-500 hover:bg-slate-700 text-white uppercase w-full p-4 mt-5 cursor-pointer rounded-md"
+            onClick={ () => { handleClickDesativarProduto(id) }}
+            />
+        )}
+
     </div>
   )
 }

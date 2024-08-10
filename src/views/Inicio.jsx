@@ -5,9 +5,14 @@ import Produto from "../components/Produto"
 
 export default function Inicio() {
 
+  const token = localStorage.getItem('AUTH_TOKEN')
   const {categoriaSelecionada} = useProvider()
   
-  const fetcher = () => clienteAxios('/api/produtos').then(data => data.data)
+  const fetcher = () => clienteAxios('/api/produtos', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }).then(data => data.data)
   const { data, error, isLoading } = useSWR('/api/produtos', fetcher,{
     refreshInterval:1000
   } )
@@ -28,6 +33,7 @@ export default function Inicio() {
           <Produto
             key={produto.id} 
             produto={produto}
+            btnAdicionar={true}
           />
         ))}
       </div>
